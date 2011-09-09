@@ -11,7 +11,8 @@ Edit config.php
 ```
 
 ## Auth users
---From redirect.php---
+From redirect.php:
+
 ``` php
 	/* Start session and load library. */
 	session_start();
