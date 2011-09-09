@@ -1,5 +1,5 @@
 # Shelby API PHP Client & Boilerplate app
-
+Here is a client for the Shelby API and some boilerplate code to get and app started. You must have created an app at http://dev.shelby.tv for this to work : )
 
 ## Configure
 Edit config.php
