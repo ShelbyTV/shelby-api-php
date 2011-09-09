@@ -62,9 +62,9 @@ From callback.php
 	  $connection = new ShelbyOAuth(CONSUMER_KEY, CONSUMER_SECRET, $_SESSION['oauth_token'], $_SESSION['oauth_token_secret']);
 
 	  // Get user object
-	  $user = $connection->get('users');
-	  $channels = $connection->get('channels');
-	  $broadcasts = $connection->get('channels/'.$channels[1]->_id.'/broadcasts');
+	  $user = $connection->getResource('users');
+	  $channels = $connection->getResource('channels');
+	  $broadcasts = $connection->getResource('channels/'.$channels[1]->_id.'/broadcasts');
 	?>
 ```
 

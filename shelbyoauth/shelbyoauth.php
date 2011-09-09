@@ -137,23 +137,28 @@ class ShelbyOAuth {
   /**
    * GET wrapper for oAuthRequest.
    */
-  function get($url, $parameters = array()) {
-    $response = $this->oAuthRequest($url, 'GET', $parameters);
+  function get($url, $parameters = array(), $is_plaintext) {
+    $response = $this->oAuthRequest($url, 'GET', $parameters, $is_plaintext);
     if ($this->format === 'json' && $this->decode_json) {
       return json_decode($response);
     }
     return $response;
   }
 
+  function getResource($url){
+    return $this->get($url, array(), true);
+  }
+
   /**
    * Format and sign an OAuth / API request
    */
-  function oAuthRequest($url, $method, $parameters) {
+  function oAuthRequest($url, $method, $parameters, $is_plaintext) {
     if (strrpos($url, 'https://') !== 0 && strrpos($url, 'http://') !== 0) {
       $url = "{$this->host}{$url}.{$this->format}";
     }
     $request = OAuthRequest::from_consumer_and_token($this->consumer, $this->token, $method, $url, $parameters);
-    $request->sign_request($this->plaintext_method, $this->consumer, $this->token);
+    $req_method = $is_plaintext ? $this->plaintext_method : $this->sha1_method;
+    $request->sign_request($req_method, $this->consumer, $this->token);
     switch ($method) {
     case 'GET':
       return $this->http($request->to_url(), 'GET');
